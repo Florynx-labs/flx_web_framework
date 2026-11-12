@@ -22,6 +22,9 @@ async function main() {
   ];
 
   const commonExternals = [
+    '@florynx-labs/flx-core',
+    '@florynx-labs/flx-react',
+    '@florynx-labs/flx-pack',
     '@teamvelix/velix-core',
     '@teamvelix/velix-react',
     '@teamvelix/velix-pack',
@@ -75,13 +78,13 @@ async function main() {
     execSync('npx tsc --emitDeclarationOnly', { stdio: 'ignore' });
   } catch {}
 
-  // Copy hmr-client from velix-react if present
-  const reactHmr = '../velix-react/dist/hmr-client.js';
+  // Copy hmr-client from flx-react if present
+  const reactHmr = '../flx-react/dist/hmr-client.js';
   if (fs.existsSync(reactHmr)) {
     fs.copyFileSync(reactHmr, 'dist/hmr-client.js');
   }
 
-  console.log('✓ @teamvelix/velix built cleanly to dist/');
+  console.log('✓ @florynx-labs/flx built cleanly to dist/');
 }
 
 main().catch(err => {

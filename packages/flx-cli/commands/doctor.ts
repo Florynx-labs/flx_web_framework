@@ -8,7 +8,7 @@ import { execSync } from 'child_process';
 import pc from 'picocolors';
 import { VERSION } from '../version.js';
 import { showBanner, log } from './shared.js';
-import { ManifestSchema } from '@teamvelix/velix-core';
+import { ManifestSchema } from '@florynx-labs/flx-core';
 
 interface DiagnosticResult {
   name: string;
@@ -19,7 +19,7 @@ interface DiagnosticResult {
 
 export async function doctorCommand() {
   showBanner();
-  console.log(`  ${pc.bold('▲ Velix Doctor — Diagnostic & Health Check')}`);
+  console.log(`  ${pc.bold('▲ FLX Doctor — Diagnostic & Health Check')}`);
   log.blank();
 
   const cwd = process.cwd();
@@ -34,11 +34,12 @@ export async function doctorCommand() {
   }
 
   // 2. Project structure & config
-  const hasConfig = fs.existsSync(path.join(cwd, 'velix.config.ts')) || fs.existsSync(path.join(cwd, 'velix.config.js'));
+  const hasConfig = fs.existsSync(path.join(cwd, 'flx.config.ts')) || fs.existsSync(path.join(cwd, 'flx.config.js')) || fs.existsSync(path.join(cwd, 'velix.config.ts')) || fs.existsSync(path.join(cwd, 'velix.config.js'));
   if (hasConfig) {
-    results.push({ name: 'velix.config.ts', status: 'pass', detail: 'Found' });
+    const configName = fs.existsSync(path.join(cwd, 'flx.config.ts')) ? 'flx.config.ts' : fs.existsSync(path.join(cwd, 'flx.config.js')) ? 'flx.config.js' : 'velix.config.ts';
+    results.push({ name: configName, status: 'pass', detail: 'Found' });
   } else {
-    results.push({ name: 'velix.config.ts', status: 'warn', message: 'Missing velix.config.ts (using framework defaults)' });
+    results.push({ name: 'flx.config.ts', status: 'warn', message: 'Missing flx.config.ts (using framework defaults)' });
   }
 
   const hasAppDir = fs.existsSync(path.join(cwd, 'app'));
@@ -239,28 +240,34 @@ export async function doctorCommand() {
     });
   }
 
-  // 7. Accessibility of /__velix/hmr-client.js
+  // 7. Accessibility of /__flx/hmr-client.js (or /__velix/hmr-client.js)
   let hmrClientFound = false;
   const hmrCandidates = [
+    path.join(cwd, 'node_modules', '@florynx-labs', 'flx-react', 'dist', 'hmr-client.js'),
+    path.join(cwd, 'node_modules', '@florynx-labs', 'flx-react', 'src', 'hmr', 'hmr-client.ts'),
+    path.join(cwd, 'node_modules', '@florynx-labs', 'flx', 'dist', 'hmr-client.js'),
+    path.join(cwd, 'packages', 'flx-react', 'dist', 'hmr-client.js'),
+    path.join(cwd, 'packages', 'flx-react', 'src', 'hmr', 'hmr-client.ts'),
+    path.join(cwd, 'packages', 'flx', 'dist', 'hmr-client.js'),
+    path.join(cwd, '..', 'packages', 'flx-react', 'dist', 'hmr-client.js'),
+    path.join(cwd, '..', 'packages', 'flx-react', 'src', 'hmr', 'hmr-client.ts'),
+    path.join(cwd, '..', 'packages', 'flx', 'dist', 'hmr-client.js'),
     path.join(cwd, 'node_modules', '@teamvelix', 'velix-react', 'dist', 'hmr-client.js'),
     path.join(cwd, 'node_modules', '@teamvelix', 'velix-react', 'src', 'hmr', 'hmr-client.ts'),
     path.join(cwd, 'node_modules', '@teamvelix', 'velix', 'dist', 'hmr-client.js'),
     path.join(cwd, 'packages', 'velix-react', 'dist', 'hmr-client.js'),
     path.join(cwd, 'packages', 'velix-react', 'src', 'hmr', 'hmr-client.ts'),
     path.join(cwd, 'packages', 'velix', 'dist', 'hmr-client.js'),
-    path.join(cwd, '..', 'packages', 'velix-react', 'dist', 'hmr-client.js'),
-    path.join(cwd, '..', 'packages', 'velix-react', 'src', 'hmr', 'hmr-client.ts'),
-    path.join(cwd, '..', 'packages', 'velix', 'dist', 'hmr-client.js'),
   ];
   for (const c of hmrCandidates) {
     if (fs.existsSync(c)) {
       hmrClientFound = true;
-      results.push({ name: '/__velix/hmr-client.js source', status: 'pass', detail: path.relative(cwd, c) });
+      results.push({ name: 'HMR client source', status: 'pass', detail: path.relative(cwd, c) });
       break;
     }
   }
   if (!hmrClientFound) {
-    results.push({ name: '/__velix/hmr-client.js source', status: 'fail', message: 'HMR client file not found in velix-react package' });
+    results.push({ name: 'HMR client source', status: 'fail', message: 'HMR client file not found in flx-react package' });
   }
 
   // 8. Single copy of react / react-dom

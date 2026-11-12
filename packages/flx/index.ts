@@ -1,16 +1,26 @@
 /**
- * Velix v5 — Main Entry Point
+ * FLX v1.0.0 — Main Entry Point
  *
- * The primary export for the velix framework.
+ * The primary export for the FLX framework by Florynx Labs.
+ * "Build without limits."
  *
  * @example
  * ```ts
- * import { defineConfig, redirect, json, Link } from 'velix';
+ * import { defineConfig, redirect, json, Link } from '@florynx-labs/flx';
  * ```
  */
 
 // ── Configuration ──
-export { defineConfig, loadConfig, resolvePaths, VelixConfigSchema, defaultConfig, type VelixConfig } from './config.js';
+export {
+  defineConfig,
+  loadConfig,
+  resolvePaths,
+  VelixConfigSchema,
+  VelixConfigSchema as FlxConfigSchema,
+  defaultConfig,
+  type VelixConfig,
+  type VelixConfig as FlxConfig,
+} from './config.js';
 
 // ── Types ──
 export type {
@@ -20,20 +30,21 @@ export type {
   IslandConfig, IslandManifest,
   Middleware, ApiHandler, NextFunction,
   ServerAction, TypedActionResult, ActionState,
-  VelixPlugin, Metadata,
+  VelixPlugin, VelixPlugin as FlxPlugin, Metadata,
   BuildOptions, BuildResult, StaticPath, StaticProps,
 } from './types.js';
 
 export type {
   InferLoaderData, InferActionInput, InferActionOutput
-} from '@teamvelix/velix-core';
+} from '@florynx-labs/flx-core';
 
 export {
   defineError, defineNotFound,
-  VelixHttpError, ForbiddenError, UnauthorizedError
-} from '@teamvelix/velix-core';
+  VelixHttpError, VelixHttpError as FlxHttpError,
+  ForbiddenError, UnauthorizedError
+} from '@florynx-labs/flx-core';
 
-export type { ErrorPageProps } from '@teamvelix/velix-react';
+export type { ErrorPageProps } from '@florynx-labs/flx-react';
 
 // ── Helpers ──
 export {
@@ -49,7 +60,7 @@ export {
 export { buildRouteTree, matchRoute, findRouteLayouts } from './router/index.js';
 
 // ── Server ──
-export { createServer, type VelixServer } from './server/index.js';
+export { createServer, type VelixServer, type VelixServer as FlxServer } from './server/index.js';
 
 // ── Middleware ──
 export { middlewares, runMiddleware, loadMiddleware, composeMiddleware } from './middleware/index.js';
@@ -68,7 +79,7 @@ export { generateMetadataTags, mergeMetadata, generateJsonLd, jsonLd, generateSi
 export {
   serverAction, registerAction, getAction, executeAction,
   callServerAction, deserializeArgs, useActionContext,
-  formAction, useVelixAction, bindArgs,
+  formAction, useVelixAction, useVelixAction as useFlxAction, bindArgs,
   useActionState, useOptimistic, useFormStatus,
 } from './actions/index.js';
 
@@ -76,7 +87,7 @@ export {
 export { revalidatePath, revalidateTag, unstable_cache, cacheManager } from './actions/revalidation.js';
 
 // ── Hooks ──
-export { useAsyncData, useOptimisticMutation, preloadResource, use } from '../velix-react/src/hooks/index.js';
+export { useAsyncData, useOptimisticMutation, preloadResource, use } from '../flx-react/src/hooks/index.js';
 
 // ── Context ──
 export { useParams, useQuery, usePathname, useRequest, RequestContext, RouteContext, LayoutContext, createRequestContext } from './context.js';
@@ -85,7 +96,7 @@ export { useParams, useQuery, usePathname, useRequest, RequestContext, RouteCont
 export { Link, useRouter, router, hydrate } from './client/index.js';
 
 // ── Components ──
-export { Image, type ImageProps } from '../velix-react/src/components/Image.js';
+export { Image, type ImageProps } from '../flx-react/src/components/Image.js';
 
 // ── Build ──
 export { build } from './build/index.js';

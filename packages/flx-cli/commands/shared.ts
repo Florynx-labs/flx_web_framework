@@ -1,5 +1,6 @@
 /**
  * Shared CLI utilities — logger, banner, helpers
+ * FLX by Florynx Labs
  */
 import pc from 'picocolors';
 import fs from 'fs';
@@ -16,7 +17,8 @@ export const log = {
 
 export function showBanner() {
   console.log('');
-  console.log(`  ${pc.green('▲')} ${pc.bold('Velix')} ${pc.dim(`v${VERSION}`)}`);
+  console.log(`  ${pc.green('◆')} ${pc.bold('FLX')} ${pc.dim(`v${VERSION}`)} ${pc.dim('by Florynx Labs')}`);
+  console.log(`  ${pc.dim('Build without limits.')}`);
   console.log(`  ${pc.dim('──────────────────────────────────────────────')}`);
   console.log('');
 }

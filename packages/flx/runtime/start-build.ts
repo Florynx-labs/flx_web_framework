@@ -1,5 +1,5 @@
 /**
- * Velix v5 — Build Script
+ * FLX v1.0.0 — Build Script
  * Build the application for production
  */
 
@@ -10,13 +10,20 @@ async function runBuild() {
   const isPack = process.argv.includes('--pack');
   if (isPack) {
     try {
-      const { VelixPack, formatBuildStats } = await import('@teamvelix/velix-pack');
-      const pack = new VelixPack({ projectRoot: process.cwd(), mode: 'production', minify: true });
+      let PackModule: any;
+      try {
+        PackModule = await import('@florynx-labs/flx-pack');
+      } catch {
+        PackModule = await import('@teamvelix/velix-pack');
+      }
+      const PackClass = PackModule.FlxPack || PackModule.VelixPack;
+      const formatStats = PackModule.formatBuildStats;
+      const pack = new PackClass({ projectRoot: process.cwd(), mode: 'production', minify: true });
       const stats = await pack.build();
-      console.log('\n' + formatBuildStats(stats) + '\n');
+      console.log('\n' + formatStats(stats) + '\n');
       return;
     } catch (err: any) {
-      logger.warn(`Velix Pack build failed, falling back to standard build: ${err.message}`);
+      logger.warn(`FLX Pack build failed, falling back to standard build: ${err.message}`);
     }
   }
 

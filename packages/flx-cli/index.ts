@@ -1,17 +1,19 @@
 #!/usr/bin/env node
 
 /**
- * Velix v5 CLI
+ * FLX v1.0.0 CLI by Florynx Labs
  *
  * Commands:
- *   velix create <name>     Create a new Velix project
- *   velix dev               Start development server
- *   velix build             Build for production
- *   velix start             Start production server
- *   velix g <type> <name>   Generate (page, component, api, layout, middleware, etc.)
- *   velix doctor            Health check
- *   velix info              Framework info
- *   velix analyze           Bundle analysis
+ *   flx create <name>     Create a new FLX project
+ *   flx dev               Start development server
+ *   flx build             Build for production
+ *   flx start             Start production server
+ *   flx g <type> <name>   Generate (page, component, api, layout, middleware, etc.)
+ *   flx doctor            Health check & diagnostics
+ *   flx info              Framework & environment info
+ *   flx analyze           Bundle analysis
+ *   flx pack              FLX Pack incremental compiler engine
+ *   flx ui                Interactive terminal interface
  */
 
 import pc from 'picocolors';
@@ -24,16 +26,16 @@ import { showBanner, log } from './commands/shared.js';
 
 function showHelp() {
   showBanner();
-  console.log(`  ${pc.bold('Usage:')} velix <command> [options]`);
+  console.log(`  ${pc.bold('Usage:')} flx <command> [options]`);
   console.log('');
   console.log(`  ${pc.bold('Commands:')}`);
-  console.log(`    ${pc.green('create')} <name>          Create a new Velix project`);
+  console.log(`    ${pc.green('create')} <name>          Create a new FLX project`);
   console.log(`    ${pc.green('dev')}                    Start development server`);
   console.log(`    ${pc.green('build')}                  Build for production`);
   console.log(`    ${pc.green('start')}                  Start production server`);
   console.log(`    ${pc.green('g')} <type> <name>        Generate component/page/api/...`);
-  console.log(`    ${pc.green('ui')} add <component>   Install Shadcn-style UI components`);
-  console.log(`    ${pc.green('pack')} [options]            Velix Pack diagnostics (--analyze, --debug, --profile)`);
+  console.log(`    ${pc.green('ui')} add <component>     Install UI components`);
+  console.log(`    ${pc.green('pack')} [options]         FLX Pack compiler diagnostics (--analyze, --debug, --profile)`);
   console.log(`    ${pc.green('doctor')}                 Health check & diagnostics`);
   console.log(`    ${pc.green('info')}                   Framework & environment info`);
   console.log(`    ${pc.green('analyze')}                Bundle analysis`);
@@ -42,10 +44,10 @@ function showHelp() {
   console.log(`    page, layout, component, hook, api, action, middleware, context, loading, error, not-found`);
   console.log('');
   console.log(`  ${pc.bold('Examples:')}`);
-  console.log(`    ${pc.dim('$')} velix create my-app`);
-  console.log(`    ${pc.dim('$')} velix dev`);
-  console.log(`    ${pc.dim('$')} velix g page dashboard`);
-  console.log(`    ${pc.dim('$')} velix g api users`);
+  console.log(`    ${pc.dim('$')} flx create my-app`);
+  console.log(`    ${pc.dim('$')} flx dev`);
+  console.log(`    ${pc.dim('$')} flx g page dashboard`);
+  console.log(`    ${pc.dim('$')} flx g api users`);
   console.log('');
 }
 
@@ -63,7 +65,7 @@ async function main() {
   }
 
   if (command === '--version' || command === '-v') {
-    console.log(`velix v${VERSION}`);
+    console.log(`flx v${VERSION} by Florynx Labs`);
     return;
   }
 
@@ -114,7 +116,6 @@ async function main() {
       await packCommand(args.slice(1));
       break;
     }
-
     case 'ui': {
       const { handleUiCommand } = await import('./commands/ui.js');
       await handleUiCommand(args.slice(1));

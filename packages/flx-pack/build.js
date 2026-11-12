@@ -19,10 +19,13 @@ async function main() {
       js: "import { createRequire } from 'module'; const require = createRequire(import.meta.url);",
     },
     external: [
+      '@florynx-labs/flx-core',
       '@teamvelix/velix-core',
       'chokidar',
       'esbuild',
       'picocolors',
+      'postcss',
+      'postcss-load-config',
       'fs',
       'path',
       'crypto',
@@ -36,7 +39,7 @@ async function main() {
     // Non-fatal if tsc is not found locally
   }
 
-  console.log('✓ Velix Pack built cleanly to dist/index.js and dist/index.d.ts');
+  console.log('✓ FLX Pack built cleanly to dist/index.js and dist/index.d.ts');
 }
 
 main().catch(err => {

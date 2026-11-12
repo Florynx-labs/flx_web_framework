@@ -18,11 +18,18 @@
     "rootDir": ".",
     "baseUrl": ".",
     "paths": {
+      "@flx/*": ["./*"],
       "@velix/*": ["./*"],
-      "@teamvelix/velix-core": ["../velix-core/src/index.ts"],
-      "@teamvelix/velix-core/*": ["../velix-core/src/*"],
-      "@teamvelix/velix-pack": ["../velix-pack/src/index.ts"],
-      "@teamvelix/velix-pack/*": ["../velix-pack/src/*"]
+      "@florynx-labs/flx-core": ["../flx-core/src/index.ts"],
+      "@florynx-labs/flx-core/*": ["../flx-core/src/*"],
+      "@florynx-labs/flx-pack": ["../flx-pack/src/index.ts"],
+      "@florynx-labs/flx-pack/*": ["../flx-pack/src/*"],
+      "@florynx-labs/flx-react": ["../flx-react/src/index.ts"],
+      "@florynx-labs/flx-react/*": ["../flx-react/src/*"],
+      "@teamvelix/velix-core": ["../flx-core/src/index.ts"],
+      "@teamvelix/velix-core/*": ["../flx-core/src/*"],
+      "@teamvelix/velix-pack": ["../flx-pack/src/index.ts"],
+      "@teamvelix/velix-pack/*": ["../flx-pack/src/*"]
     },
     "types": ["node"]
   },

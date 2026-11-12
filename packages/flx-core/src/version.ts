@@ -1,6 +1,5 @@
 /**
- * Velix version — single source of truth.
- * Update this file only when releasing a new version.
+ * FLX version — single source of truth.
+ * Published by Florynx Labs.
  */
-export const VERSION = '5.3.7';
-
+export const VERSION = '1.0.0';

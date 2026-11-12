@@ -17,11 +17,12 @@ import prompts from 'prompts';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const VERSION = '5.3.7';
+const VERSION = '1.0.0';
 
 async function main() {
   console.log('');
-  console.log(`  ${pc.green('▲')} ${pc.bold('Create Velix App')} ${pc.dim(`v${VERSION}`)}`);
+  console.log(`  ${pc.green('◆')} ${pc.bold('Create FLX App')} ${pc.dim(`v${VERSION}`)} ${pc.dim('by Florynx Labs')}`);
+  console.log(`  ${pc.dim('Build without limits.')}`);
   console.log(`  ${pc.dim('──────────────────────────────────────────────')}`);
   console.log('');
 
@@ -32,7 +33,7 @@ async function main() {
       type: 'text',
       name: 'name',
       message: 'Project name:',
-      initial: 'my-velix-app',
+      initial: 'my-flx-app',
     });
     projectName = response.name;
     if (!projectName) process.exit(0);
@@ -55,7 +56,7 @@ async function main() {
       name: 'template',
       message: 'Select a template:',
       choices: [
-        { title: '✨ Default', description: 'Full Velix app with examples', value: 'default' },
+        { title: '✨ Default', description: 'Full FLX app with examples', value: 'default' },
         { title: '⚡ Minimal', description: 'Bare minimum setup', value: 'minimal' },
         { title: '📝 Blog', description: 'Blog starter', value: 'blog' },
       ],
@@ -69,17 +70,17 @@ async function main() {
   const { useTailwind } = await prompts({
     type: 'toggle',
     name: 'useTailwind',
-    message: 'Use Tailwind CSS?',
+    message: 'Use Tailwind CSS v4?',
     initial: true,
     active: 'yes',
     inactive: 'no',
   });
 
-  // Ask for Velix Pack Beta
+  // Ask for FLX Pack
   const { usePack } = await prompts({
     type: 'toggle',
     name: 'usePack',
-    message: 'Enable Velix Pack Beta engine? (Recommended for fast rebuilds & HMR)',
+    message: 'Enable FLX Pack build engine? (Recommended for fast rebuilds & HMR)',
     initial: true,
     active: 'yes',
     inactive: 'no',
@@ -125,14 +126,14 @@ async function main() {
 function generateTemplate(dir: string, name: string, template: string, useTailwind: boolean = true, usePack: boolean = true) {
   // package.json
   const pkg: any = {
-    name, version: '0.1.0', private: true, type: 'module',
+    name, version: '1.0.0', private: true, type: 'module',
     scripts: {
-      dev: usePack ? 'velix dev --pack' : 'velix dev',
-      build: usePack ? 'velix build --pack' : 'velix build',
-      start: 'velix start'
+      dev: usePack ? 'flx dev --pack' : 'flx dev',
+      build: usePack ? 'flx build --pack' : 'flx build',
+      start: 'flx start'
     },
-    dependencies: { '@teamvelix/velix': 'latest', '@teamvelix/cli': 'latest', react: '^19.0.0', 'react-dom': '^19.0.0' },
-    devDependencies: { '@teamvelix/velix-pack': '^0.1.0-beta.1', typescript: '^5.7.0', '@types/react': '^19.0.0', '@types/react-dom': '^19.0.0' },
+    dependencies: { '@florynx-labs/flx': '^1.0.0', react: '^19.0.0', 'react-dom': '^19.0.0' },
+    devDependencies: { '@florynx-labs/flx-cli': '^1.0.0', '@florynx-labs/flx-pack': '^1.0.0', typescript: '^5.7.0', '@types/react': '^19.0.0', '@types/react-dom': '^19.0.0' },
   };
 
   if (useTailwind) {
@@ -145,14 +146,14 @@ function generateTemplate(dir: string, name: string, template: string, useTailwi
 
   write(path.join(dir, 'package.json'), JSON.stringify(pkg, null, 2));
 
-  // velix.config.ts
-  write(path.join(dir, 'velix.config.ts'), `import { defineConfig${useTailwind ? ', tailwindPlugin' : ''} } from "@teamvelix/velix";\n\nexport default defineConfig({\n  app: { name: "${name}" },\n  server: { port: 3000, host: "localhost" },\n  seo: { sitemap: true, robots: true, openGraph: true },\n  favicon: "/favicon.webp",\n  ${useTailwind ? `plugins: [\n    tailwindPlugin()\n  ],` : 'plugins: [],'}\n});\n`);
+  // flx.config.ts
+  write(path.join(dir, 'flx.config.ts'), `import { defineConfig${useTailwind ? ', tailwindPlugin' : ''} } from "@florynx-labs/flx";\n\nexport default defineConfig({\n  app: { name: "${name}" },\n  server: { port: 3000, host: "localhost" },\n  seo: { sitemap: true, robots: true, openGraph: true },\n  favicon: "/favicon.ico",\n  ${useTailwind ? `plugins: [\n    tailwindPlugin()\n  ],` : 'plugins: [],'}\n});\n`);
 
   // tsconfig.json
   write(path.join(dir, 'tsconfig.json'), JSON.stringify({
     compilerOptions: { target: 'ES2022', module: 'ESNext', moduleResolution: 'bundler', jsx: 'react-jsx', strict: true, esModuleInterop: true, skipLibCheck: true },
     include: ['app/**/*.ts', 'app/**/*.tsx', 'server/**/*.ts', 'components/**/*.tsx'],
-    exclude: ['node_modules', '.velix']
+    exclude: ['node_modules', '.flx', '.velix']
   }, null, 2));
 
   // app/
@@ -198,11 +199,11 @@ function generateTemplate(dir: string, name: string, template: string, useTailwi
 function generateAgentMd(name: string, template: string, useTailwind: boolean): string {
   const styling = useTailwind
     ? 'Tailwind CSS v4 (utility classes). Use `bg-[#00e87a]`, `text-[#00e87a]`, `border-[#1e201e]` etc. for brand styling.'
-    : 'Vanilla CSS via `app/globals.css`. Use CSS custom properties: `var(--velix-accent)`, `var(--velix-surface)`.';
+    : 'Vanilla CSS via `app/globals.css`. Use CSS custom properties: `var(--flx-accent)`, `var(--flx-surface)`.';
 
   const templateBlurb: Record<string, string> = {
-    default: 'Full Velix app — landing page hero, navbar, footer, feature sections, CTA. Edit `app/page.tsx` to customise the landing page.',
-    minimal: 'Bare-bones Velix app — a single page with project structure displayed. Perfect starting point for custom UIs.',
+    default: 'Full FLX app — landing page hero, navbar, footer, feature sections, CTA. Edit `app/page.tsx` to customise the landing page.',
+    minimal: 'Bare-bones FLX app — a single page with project structure displayed. Perfect starting point for custom UIs.',
     blog: 'Blog starter — listing page (`app/blog/page.tsx`), slug route (`app/blog/post/[slug]/page.tsx`), and ID route (`app/blog/id/[id]/page.tsx`).',
   };
 
@@ -223,8 +224,8 @@ ${name}/
 │   ├── loaders/            ← SSR data fetching (defineLoader)
 │   └── actions/            ← Server mutations (defineAction + Zod)
 ├── public/
-│   └── favicon.webp
-├── velix.config.ts
+│   └── favicon.ico
+├── flx.config.ts
 └── AGENT.md                ← AI Agent & developer guide (this file)
 \`\`\``,
     minimal: `\`\`\`
@@ -238,8 +239,8 @@ ${name}/
 │   ├── loaders/            ← SSR data fetching
 │   └── actions/            ← Server Actions (mutations)
 ├── public/
-│   └── favicon.webp
-├── velix.config.ts
+│   └── favicon.ico
+├── flx.config.ts
 └── AGENT.md
 \`\`\``,
     blog: `\`\`\`
@@ -258,8 +259,8 @@ ${name}/
 │   ├── loaders/
 │   └── actions/
 ├── public/
-│   └── favicon.webp
-├── velix.config.ts
+│   └── favicon.ico
+├── flx.config.ts
 └── AGENT.md
 \`\`\``,
   };
@@ -267,15 +268,16 @@ ${name}/
   return `# AGENT.md — ${name}
 
 > **Authoritative reference for AI Agents (Claude Code, Cursor, Antigravity, Copilot, etc.) and developers.**
-> Read this document completely before generating code or modifying existing files in this Velix project.
+> Read this document completely before generating code or modifying existing files in this FLX project.
 
 ---
 
 ## 1. Project Overview & Tech Stack
 
 - **Project Name:** \`${name}\`
-- **Framework:** **Velix v5.3** (Full-stack React 19 framework)
-- **Template:** \`${template}\` — ${templateBlurb[template] ?? 'Velix app'}
+- **Framework:** **FLX v1.0.0** (The Full-Stack React Framework by Florynx Labs)
+- **Tagline:** Build without limits.
+- **Template:** \`${template}\` — ${templateBlurb[template] ?? 'FLX app'}
 - **TypeScript:** Strict mode enabled (\`strict: true\`)
 - **Styling:** ${styling}
 - **Dev Server:** \`npm run dev\` (starts dev server with HMR at [http://localhost:3000](http://localhost:3000))
@@ -315,7 +317,7 @@ export default function Counter() { ... }
 
 ---
 
-*Generated by [create-velix-app](https://github.com/Velixteam/velix) · Velix v5.3*
+*Generated by [create-flx-app](https://github.com/florynx-labs/flx) · FLX v1.0.0 by Florynx Labs*
 `;
 }
 
@@ -323,16 +325,27 @@ export default function Counter() { ... }
 
 function generateGlobalsCss(useTailwind: boolean) {
   const baseTokens = `:root {
+  --flx-bg: #0a0a0a;
+  --flx-surface: #111211;
+  --flx-border: #1e201e;
+  --flx-accent: #00e87a;
+  --flx-accent-light: #39ffa0;
+  --flx-accent-hover: #00c96a;
+  --flx-accent-glow: rgba(0,232,122,0.15);
+  --flx-accent-deep: #001a0d;
+  --flx-success: #00e87a;
+  --flx-muted: #6b7068;
+  --flx-text: #e8ebe5;
+  --flx-error: #ff6b6b;
+
   --velix-bg: #0a0a0a;
   --velix-surface: #111211;
   --velix-border: #1e201e;
-  /* Brand green palette — extracted from Velix logo (source of truth) */
-  --velix-accent: #00e87a;          /* tab active border, row values, conn dot   */
-  --velix-accent-light: #39ffa0;    /* pill text, dev-badge text, compile spinner */
-  --velix-accent-hover: #00c96a;    /* button hover                               */
+  --velix-accent: #00e87a;
+  --velix-accent-light: #39ffa0;
+  --velix-accent-hover: #00c96a;
   --velix-accent-glow: rgba(0,232,122,0.15);
-  --velix-accent-deep: #001a0d;     /* pill-green bg                              */
-  /* Semantic only — do NOT use as brand accent */
+  --velix-accent-deep: #001a0d;
   --velix-success: #00e87a;
   --velix-muted: #6b7068;
   --velix-text: #e8ebe5;

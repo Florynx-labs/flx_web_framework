@@ -18,6 +18,7 @@
     "rootDir": ".",
     "baseUrl": ".",
     "paths": {
+      "@flx/*": ["./*"],
       "@velix/*": ["./*"]
     },
     "types": ["node"]

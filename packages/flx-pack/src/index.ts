@@ -36,7 +36,7 @@ export class VelixPack {
     this.options = {
       projectRoot,
       appDir: options.appDir || path.join(projectRoot, 'app'),
-      outDir: options.outDir || path.join(projectRoot, '.velix'),
+      outDir: options.outDir || (fs.existsSync(path.join(projectRoot, '.velix')) ? path.join(projectRoot, '.velix') : path.join(projectRoot, '.flx')),
       mode: options.mode || 'development',
       minify: options.minify ?? false,
       sourcemap: options.sourcemap ?? true,
@@ -187,7 +187,7 @@ export class VelixPack {
     for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
       const fullPath = path.join(dir, entry.name);
       if (entry.isDirectory()) {
-        if (entry.name !== 'node_modules' && entry.name !== '.velix' && entry.name !== 'dist') {
+        if (entry.name !== 'node_modules' && entry.name !== '.velix' && entry.name !== '.flx' && entry.name !== 'dist') {
           results.push(...this.findSourceFiles(fullPath));
         }
       } else if (/\.(tsx?|jsx?)$/.test(entry.name)) {
@@ -200,3 +200,7 @@ export class VelixPack {
   public getHMR(): HMRBridge { return this.hmr; }
   public getStats(): BuildStats { return this.stats; }
 }
+
+export const FlxPack = VelixPack;
+export type FlxPack = VelixPack;
+

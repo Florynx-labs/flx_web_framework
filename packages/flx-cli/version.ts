@@ -1,6 +1,5 @@
 /**
- * Velix CLI version — single source of truth.
- * Keep in sync with packages/velix/version.ts.
+ * FLX CLI version — single source of truth.
+ * Published by Florynx Labs.
  */
-export const VERSION = '5.3.7';
-
+export const VERSION = '1.0.0';

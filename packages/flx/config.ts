@@ -1,6 +1,6 @@
 /**
- * Velix v5 Configuration System
- * Handles loading, validation, and merging of velix.config.ts
+ * FLX v1.0.0 Configuration System
+ * Handles loading, validation, and merging of flx.config.ts (and fallback velix.config.ts)
  */
 
 import fs from 'fs';
@@ -125,9 +125,11 @@ export function defineConfig(config: Partial<VelixConfig>): Partial<VelixConfig>
 // ============================================================================
 
 /**
- * Loads and validates configuration from velix.config.ts
+ * Loads and validates configuration from flx.config.ts (or velix.config.ts)
  */
 export async function loadConfig(projectRoot: string): Promise<VelixConfig> {
+  const configPathFlxTs = path.join(projectRoot, 'flx.config.ts');
+  const configPathFlxJs = path.join(projectRoot, 'flx.config.js');
   const configPathTs = path.join(projectRoot, 'velix.config.ts');
   const configPathJs = path.join(projectRoot, 'velix.config.js');
   // Support legacy config for migration
@@ -135,7 +137,9 @@ export async function loadConfig(projectRoot: string): Promise<VelixConfig> {
   const configPathLegacyJs = path.join(projectRoot, 'flexireact.config.js');
 
   let configPath: string | null = null;
-  if (fs.existsSync(configPathTs)) configPath = configPathTs;
+  if (fs.existsSync(configPathFlxTs)) configPath = configPathFlxTs;
+  else if (fs.existsSync(configPathFlxJs)) configPath = configPathFlxJs;
+  else if (fs.existsSync(configPathTs)) configPath = configPathTs;
   else if (fs.existsSync(configPathJs)) configPath = configPathJs;
   else if (fs.existsSync(configPathLegacyTs)) configPath = configPathLegacyTs;
   else if (fs.existsSync(configPathLegacyJs)) configPath = configPathLegacyJs;
@@ -202,3 +206,7 @@ function deepMerge(target: Record<string, any>, source: Record<string, any>): Re
 
   return result;
 }
+
+export type FlxConfig = VelixConfig;
+export const FlxConfigSchema = VelixConfigSchema;
+

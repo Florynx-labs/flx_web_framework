@@ -55,7 +55,7 @@ jobs:
         run: pnpm test
 
   create-app:
-    name: Verify create-velix-app
+    name: Verify create-flx-app
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -77,4 +77,4 @@ jobs:
         run: pnpm --filter "./packages/*" -r run build
 
       - name: Build app generator
-        run: pnpm --filter create-velix-app run build
+        run: pnpm --filter @florynx-labs/create-flx-app run build

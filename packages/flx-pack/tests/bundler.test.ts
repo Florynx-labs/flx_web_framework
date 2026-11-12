@@ -60,7 +60,7 @@ describe('Bundler', () => {
     await new Bundler({ projectRoot: root, outDir: path.join(root, 'dist'), sourcemap: false }).bundle(graph);
 
     const clientDir = path.join(root, 'dist/client');
-    const files = fs.readdirSync(clientDir, { recursive: true }).map(String);
+    const files = fs.readdirSync(clientDir, { recursive: true }).map(String).map(f => f.replace(/\\/g, '/'));
     expect(files.some(file => file.startsWith('chunks/'))).toBe(true);
     expect(files.some(file => file.includes('first-'))).toBe(true);
     expect(files.some(file => file.includes('second-'))).toBe(true);

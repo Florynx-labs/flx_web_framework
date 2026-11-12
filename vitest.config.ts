@@ -5,9 +5,14 @@ export default defineConfig({
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
     alias: {
-      '@teamvelix/velix-core': path.resolve(__dirname, 'packages/velix-core/src/index.ts'),
-      '@teamvelix/velix-react': path.resolve(__dirname, 'packages/velix-react/src/index.ts'),
-      '@teamvelix/velix-pack': path.resolve(__dirname, 'packages/velix-pack/src/index.ts'),
+      '@florynx-labs/flx-core': path.resolve(__dirname, 'packages/flx-core/src/index.ts'),
+      '@florynx-labs/flx-react': path.resolve(__dirname, 'packages/flx-react/src/index.ts'),
+      '@florynx-labs/flx-pack': path.resolve(__dirname, 'packages/flx-pack/src/index.ts'),
+      '@florynx-labs/flx': path.resolve(__dirname, 'packages/flx/index.ts'),
+      '@teamvelix/velix-core': path.resolve(__dirname, 'packages/flx-core/src/index.ts'),
+      '@teamvelix/velix-react': path.resolve(__dirname, 'packages/flx-react/src/index.ts'),
+      '@teamvelix/velix-pack': path.resolve(__dirname, 'packages/flx-pack/src/index.ts'),
+      '@teamvelix/velix': path.resolve(__dirname, 'packages/flx/index.ts'),
     },
   },
   test: {
@@ -19,9 +24,9 @@ export default defineConfig({
       'packages/*/src/**/*.test.tsx',
       'packages/*/tests/**/*.test.ts',
     ],
-    exclude: ['**/node_modules/**', '**/dist/**', '**/.velix/**', '**/templates/**'],
+    exclude: ['**/node_modules/**', '**/dist/**', '**/.velix/**', '**/.flx/**', '**/templates/**'],
     environmentMatchGlobs: [
-      ['packages/velix-react/src/**/*.test.tsx', 'jsdom'],
+      ['packages/flx-react/src/**/*.test.tsx', 'jsdom'],
     ],
     coverage: {
       provider: 'v8',

@@ -42,3 +42,7 @@ export class UnauthorizedError extends VelixHttpError {
     super(401, message);
   }
 }
+
+export const FlxHttpError = VelixHttpError;
+export type FlxHttpError = VelixHttpError;
+

@@ -1,17 +1,17 @@
 {
   "name": "website",
-  "version": "5.3.7",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "velix dev",
-    "build": "velix build",
-    "start": "velix start"
+    "dev": "flx dev",
+    "build": "flx build",
+    "start": "flx start"
   },
   "dependencies": {
     "@tailwindcss/cli": "^4.0.0",
-    "@teamvelix/cli": "workspace:*",
-    "@teamvelix/velix": "workspace:*",
+    "@florynx-labs/flx-cli": "workspace:*",
+    "@florynx-labs/flx": "workspace:*",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "react": "^19.0.0",

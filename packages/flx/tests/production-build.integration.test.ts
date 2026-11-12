@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { build } from '../build/index.js';
-import { loadAssetManifest } from '@teamvelix/velix-core';
+import { loadAssetManifest } from '@florynx-labs/flx-core';
 
 const temporaryProjects: string[] = [];
 

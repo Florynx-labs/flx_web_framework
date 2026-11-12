@@ -80,8 +80,8 @@ export function collectRouteClientAssets(
         const bases = [...new Set([
           resolved,
           resolvedFromProject,
-          resolved.replace(/\\.(?:m?js|cjs)$/i, ''),
-          resolvedFromProject.replace(/\\.(?:m?js|cjs)$/i, ''),
+          resolved.replace(/\.(?:m?js|cjs)$/i, ''),
+          resolvedFromProject.replace(/\.(?:m?js|cjs)$/i, ''),
         ])];
         const candidates = [
           ...bases,

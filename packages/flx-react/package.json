@@ -1,7 +1,7 @@
 {
-  "name": "@teamvelix/velix-react",
-  "version": "5.3.7",
-  "description": "React bindings and SSR rendering for Velix",
+  "name": "@florynx-labs/flx-react",
+  "version": "1.0.0",
+  "description": "React bindings and SSR rendering for FLX",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
@@ -20,20 +20,20 @@
     "typecheck": "tsc --noEmit"
   },
   "keywords": [
-    "velix",
+    "flx",
     "react",
     "ssr",
     "islands"
   ],
-  "author": "velixteam",
-  "publisher": "velixteam",
+  "author": "Florynx Labs",
+  "publisher": "Florynx Labs",
   "license": "MIT",
   "peerDependencies": {
     "react": ">=19.0.1",
     "react-dom": ">=19.0.1"
   },
   "dependencies": {
-    "@teamvelix/velix-core": "workspace:*"
+    "@florynx-labs/flx-core": "workspace:*"
   },
   "engines": {
     "node": ">=18.0.0"

@@ -1,5 +1,5 @@
 /**
- * Velix v5 Server
+ * flx v1 Server
  *
  * Modular HTTP server with SSR, static file serving, API routes,
  * server actions, middleware, and plugin hooks.
@@ -72,8 +72,8 @@ export {
   handleApiRequest,
   loadAssetManifest,
   type VelixManifest,
-} from '@teamvelix/velix-core';
-import { loadAssetManifest, type VelixManifest } from '@teamvelix/velix-core';
+} from '@florynx-labs/flx-core';
+import { loadAssetManifest, type VelixManifest } from '@florynx-labs/flx-core';
 
 
 function getProjectVersion(dep: string, projectRoot: string): string {
@@ -281,7 +281,13 @@ export async function createServer(options: {
   });
 
   if (isDev) {
-    const { createHMRServer } = await import('@teamvelix/velix-core');
+    let coreModule: any;
+    try {
+      coreModule = await import('@florynx-labs/flx-core');
+    } catch {
+      coreModule = await import('@teamvelix/velix-core');
+    }
+    const { createHMRServer } = coreModule;
     const hmr = createHMRServer(server as any, projectRoot);
     (server as unknown as { broadcastHMR: (msg: any) => void }).broadcastHMR = (msg) => {
       hmr.broadcast(msg);
@@ -410,8 +416,8 @@ async function serveStaticFile(pathname: string, publicDir: string, res: http.Se
   const cacheControl = isDev
     ? 'no-store, no-cache, must-revalidate'
     : (isHashed
-        ? 'public, max-age=31536000, immutable'
-        : 'public, max-age=0, must-revalidate');
+      ? 'public, max-age=31536000, immutable'
+      : 'public, max-age=0, must-revalidate');
 
   res.writeHead(200, {
     'Content-Type': contentType,
@@ -586,7 +592,7 @@ async function handlePageRoute(
     // Get islands for hydration
     const islands = getRegisteredIslands();
     const hydrationScript = generateAdvancedHydrationScript(islands, manifest.islands);
-    
+
     const reactVersion = getProjectVersion('react', projectRoot);
     const tsVersion = getProjectVersion('typescript', projectRoot);
 
@@ -609,8 +615,21 @@ async function handlePageRoute(
     ${routeStyles.map(s => `<link rel="stylesheet" href="${s}">`).join('\n    ')}
     `;
     // ── Resolve Error Boundaries ──
-    const { resolveErrorBoundary, getErrorBoundaryType } = await import('@teamvelix/velix-core');
-    const { VelixErrorBoundary, VelixDefaultErrorPage } = await import('@teamvelix/velix-react');
+    let coreModule: any;
+    try {
+      coreModule = await import('@florynx-labs/flx-core');
+    } catch {
+      coreModule = await import('@teamvelix/velix-core');
+    }
+    const { resolveErrorBoundary, getErrorBoundaryType } = coreModule;
+
+    let reactModule: any;
+    try {
+      reactModule = await import('@florynx-labs/flx-react');
+    } catch {
+      reactModule = await import('@teamvelix/velix-react');
+    }
+    const { VelixErrorBoundary, VelixDefaultErrorPage } = reactModule;
 
     const errorBoundary = resolveErrorBoundary(route.filePath, appDir, 'error');
     const notFoundBoundary = resolveErrorBoundary(route.filePath, appDir, 'not-found');
@@ -622,13 +641,13 @@ async function handlePageRoute(
       try {
         const mod = await import(`${pathToFileURL(errorBoundary.filePath).href}?t=${Date.now()}`);
         ErrorComponent = mod.default;
-      } catch (e) {}
+      } catch (e) { }
     }
     if (notFoundBoundary) {
       try {
         const mod = await import(`${pathToFileURL(notFoundBoundary.filePath).href}?t=${Date.now()}`);
         NotFoundComponent = mod.default;
-      } catch (e) {}
+      } catch (e) { }
     }
 
     // Extract search params for the component
@@ -646,9 +665,9 @@ async function handlePageRoute(
       if (errorType === 'not-found' && NotFoundComponent) {
         pageElement = React.createElement(NotFoundComponent as any);
       } else if (ErrorComponent) {
-        pageElement = React.createElement(ErrorComponent as any, { error: err, reset: () => {} });
+        pageElement = React.createElement(ErrorComponent as any, { error: err, reset: () => { } });
       } else {
-        pageElement = React.createElement(VelixDefaultErrorPage, { error: err, reset: () => {} });
+        pageElement = React.createElement(VelixDefaultErrorPage, { error: err, reset: () => { } });
       }
     }
 
@@ -681,7 +700,7 @@ async function handlePageRoute(
 
     // Apply native waterfall hook: after render
     let finalHtml = await pluginManager.runWaterfallHook(PluginHooks.AFTER_RENDER, ssrContent, { route, config, isDev }) as string;
-    
+
     // Inject Head & Body (Surgical insertion)
     const headInjectionsHtml = `\n    ${headInjections}\n    `;
     const hmrScript = isDev ? `\n    <script type="module">\n      import { initHMRClient, VelixDevOverlay } from '/__velix/hmr-client.js';\n      initHMRClient();\n    </script>` : '';
@@ -866,7 +885,7 @@ async function serveVelixInternal(pathname: string, req: http.IncomingMessage, r
         path.join(projectRoot, 'app'),
         path.join(projectRoot, 'islands')
       ];
-      
+
       let componentPath = '';
       for (const dir of searchDirs) {
         if (!fs.existsSync(dir)) continue;

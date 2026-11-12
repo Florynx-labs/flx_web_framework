@@ -1,12 +1,12 @@
 {
-  "name": "velix",
-  "version": "5.3.7",
+  "name": "flx",
+  "version": "1.0.0",
   "private": true,
-  "description": "Velix v5 — A modern full-stack React framework optimized for performance, SEO, and developer experience",
+  "description": "FLX — The Full-Stack React Framework by Florynx Labs. Build without limits.",
   "type": "module",
   "scripts": {
-    "dev": "npx tsx packages/velix/runtime/start-dev.ts",
-    "build": "npx tsx packages/velix/runtime/start-build.ts",
+    "dev": "npx tsx packages/flx/runtime/start-dev.ts",
+    "build": "npx tsx packages/flx/runtime/start-build.ts",
     "build:packages": "pnpm -r run build",
     "publish:all": "pnpm --filter \"./packages/*\" publish --access public --no-git-checks",
     "typecheck": "tsc --noEmit",
@@ -17,6 +17,7 @@
     "loc": "node scripts/loc.js"
   },
   "keywords": [
+    "flx",
     "react",
     "framework",
     "typescript",
@@ -28,16 +29,16 @@
     "seo",
     "modern"
   ],
-  "author": "Velix Team",
+  "author": "Florynx Labs",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Velixteam/velix.git"
+    "url": "git+https://github.com/florynx-labs/flx.git"
   },
   "bugs": {
-    "url": "https://github.com/Velixteam/velix/issues"
+    "url": "https://github.com/florynx-labs/flx/issues"
   },
-  "homepage": "https://teamvelix.vercel.app",
+  "homepage": "https://flx.florynx.dev",
   "dependencies": {
     "chokidar": "^3.6.0",
     "esbuild": "0.25.0",
@@ -76,5 +77,3 @@
   },
   "packageManager": "pnpm@12.5.1+sha512.e3f305bc784a2bc89f5ad3b6138889470fae8d2af5f36b61216ec91c2c3d64089775f9de38aac331044ea40f245cb0d5666392dfdf65824e1907ef6a2c62de5f"
 }
-
-

@@ -1,7 +1,7 @@
 {
-  "name": "@teamvelix/velix-pack",
-  "version": "5.3.7",
-  "description": "Incremental build engine designed specifically for Velix",
+  "name": "@florynx-labs/flx-pack",
+  "version": "1.0.0",
+  "description": "Incremental build engine designed specifically for FLX",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
@@ -19,17 +19,17 @@
     "typecheck": "tsc --noEmit"
   },
   "keywords": [
-    "velix",
+    "flx",
     "pack",
     "bundler",
     "compiler",
     "incremental",
     "hmr"
   ],
-  "author": "Velix Team",
+  "author": "Florynx Labs",
   "license": "MIT",
   "dependencies": {
-    "@teamvelix/velix-core": "workspace:*",
+    "@florynx-labs/flx-core": "workspace:*",
     "chokidar": "^3.6.0",
     "esbuild": "0.25.0",
     "picocolors": "^1.1.1",

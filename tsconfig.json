@@ -3,7 +3,11 @@
     "target": "ES2022",
     "module": "ESNext",
     "moduleResolution": "bundler",
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "lib": [
+      "ES2022",
+      "DOM",
+      "DOM.Iterable"
+    ],
     "jsx": "react-jsx",
     "strict": true,
     "esModuleInterop": true,
@@ -17,13 +21,61 @@
     "rootDir": ".",
     "baseUrl": ".",
     "paths": {
-      "@velix/*": ["./packages/velix/*"],
-      "@velix-cli/*": ["./packages/velix-cli/*"],
-      "@teamvelix/velix-pack": ["./packages/velix-pack/src/index.ts"],
-      "@teamvelix/velix-pack/*": ["./packages/velix-pack/src/*"],
-      "@/*": ["./*"]
+      "@flx/*": [
+        "./packages/flx/*"
+      ],
+      "@flx-cli/*": [
+        "./packages/flx-cli/*"
+      ],
+      "@florynx-labs/flx": [
+        "./packages/flx/index.ts"
+      ],
+      "@florynx-labs/flx/*": [
+        "./packages/flx/*"
+      ],
+      "@florynx-labs/flx-core": [
+        "./packages/flx-core/src/index.ts"
+      ],
+      "@florynx-labs/flx-core/*": [
+        "./packages/flx-core/src/*"
+      ],
+      "@florynx-labs/flx-react": [
+        "./packages/flx-react/src/index.ts"
+      ],
+      "@florynx-labs/flx-react/*": [
+        "./packages/flx-react/src/*"
+      ],
+      "@florynx-labs/flx-pack": [
+        "./packages/flx-pack/src/index.ts"
+      ],
+      "@florynx-labs/flx-pack/*": [
+        "./packages/flx-pack/src/*"
+      ],
+      "@velix/*": [
+        "./packages/flx/*"
+      ],
+      "@velix-cli/*": [
+        "./packages/flx-cli/*"
+      ],
+      "@teamvelix/velix-core": [
+        "./packages/flx-core/src/index.ts"
+      ],
+      "@teamvelix/velix-core/*": [
+        "./packages/flx-core/src/*"
+      ],
+      "@teamvelix/velix-pack": [
+        "./packages/flx-pack/src/index.ts"
+      ],
+      "@teamvelix/velix-pack/*": [
+        "./packages/flx-pack/src/*"
+      ],
+      "@/*": [
+        "./*"
+      ]
     },
-    "types": ["node"]
+    "types": [
+      "node"
+    ]
   },
   "include": [
     "packages/**/*.ts",

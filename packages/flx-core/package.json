@@ -1,7 +1,7 @@
 {
-  "name": "@teamvelix/velix-core",
-  "version": "5.3.7",
-  "description": "Core routing, caching, and agnostic logic for Velix",
+  "name": "@florynx-labs/flx-core",
+  "version": "1.0.0",
+  "description": "Core routing, caching, and agnostic logic for FLX",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
@@ -21,12 +21,12 @@
     "typecheck": "tsc --noEmit"
   },
   "keywords": [
-    "velix",
+    "flx",
     "core",
     "framework"
   ],
-  "author": "velixteam",
-  "publisher": "velixteam",
+  "author": "Florynx Labs",
+  "publisher": "Florynx Labs",
   "license": "MIT",
   "dependencies": {
     "chokidar": "^3.6.0",

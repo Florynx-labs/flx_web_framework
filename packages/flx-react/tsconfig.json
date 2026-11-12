@@ -18,7 +18,12 @@
     "rootDir": ".",
     "baseUrl": ".",
     "paths": {
-      "@velix/*": ["./*"]
+      "@flx/*": ["./*"],
+      "@velix/*": ["./*"],
+      "@florynx-labs/flx-core": ["../flx-core/src/index.ts"],
+      "@florynx-labs/flx-core/*": ["../flx-core/src/*"],
+      "@teamvelix/velix-core": ["../flx-core/src/index.ts"],
+      "@teamvelix/velix-core/*": ["../flx-core/src/*"]
     },
     "types": ["node"]
   },

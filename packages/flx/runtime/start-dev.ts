@@ -1,5 +1,5 @@
 /**
- * Velix v5 — Development Server
+ * FLX v1.0.0 — Development Server
  * Start the dev server with hot reload
  */
 
@@ -21,24 +21,30 @@ async function startDev() {
 
   if (isPack) {
     try {
-      const { VelixPack } = await import('@teamvelix/velix-pack');
-      packInstance = new VelixPack({ projectRoot, mode: 'development' });
+      let PackModule: any;
+      try {
+        PackModule = await import('@florynx-labs/flx-pack');
+      } catch {
+        PackModule = await import('@teamvelix/velix-pack');
+      }
+      const PackClass = PackModule.FlxPack || PackModule.VelixPack;
+      packInstance = new PackClass({ projectRoot, mode: 'development' });
       const stats = await packInstance.build();
-      logger.success(`Velix Pack initialized (${stats.modulesCount} modules, ${stats.chunksCount} chunks, ${(stats.duration / 1000).toFixed(2)}s)`);
+      logger.success(`FLX Pack initialized (${stats.modulesCount} modules, ${stats.chunksCount} chunks, ${(stats.duration / 1000).toFixed(2)}s)`);
       packInstance.watch((affected: string[]) => {
-        logger.info(`Velix Pack incremental rebuild: ${affected.length} modules affected`);
+        logger.info(`FLX Pack incremental rebuild: ${affected.length} modules affected`);
         if ((server as unknown as { broadcastHMR?: (msg: any) => void }).broadcastHMR) {
           (server as unknown as { broadcastHMR: (msg: any) => void }).broadcastHMR({ type: 'full-reload', affected });
         }
       });
     } catch (e: any) {
-      logger.warn(`Velix Pack initialization fallback: ${e.message}`);
+      logger.warn(`FLX Pack initialization fallback: ${e.message}`);
     }
   }
 
   let watcher: any = null;
   if (!packInstance) {
-    // Watch for file changes using standalone chokidar when Velix Pack is not active
+    // Watch for file changes using standalone chokidar when FLX Pack is not active
     const appDir = path.join(projectRoot, 'app');
     const serverDir = path.join(projectRoot, 'server');
 

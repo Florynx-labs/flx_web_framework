@@ -7,3 +7,5 @@ export * from './hooks/index.js';
 export * from './helpers.js';
 export * from './components/VelixErrorBoundary.js';
 export * from './components/VelixDefaultErrorPage.js';
+export { VelixErrorBoundary as FlxErrorBoundary } from './components/VelixErrorBoundary.js';
+export { VelixDefaultErrorPage as FlxDefaultErrorPage } from './components/VelixDefaultErrorPage.js';
